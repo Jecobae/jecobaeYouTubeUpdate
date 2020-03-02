@@ -1,7 +1,7 @@
 
 const fetch = require('node-fetch')
 const fs = require('fs')
-const git = require('simple-git')
+const git = require('simple-git/promise')
 let mykey = process.env['YOUTUBEKEY'];
 const PL_POP = 'PLkfUwwo13dlVzxFwznkToC11duvhBtyUS';
 const PL_PYTHON = 'PLkfUwwo13dlV4qfiZdiI6Ak8HXfhFDwpB';
@@ -60,12 +60,12 @@ const USER = process.env['GITUSER'];
 const PASSWORD = process.env['GITPASSWORD'];
 const REPONAME = process.env['GITREPONAME'];
 const REPO = process.env['GITREPO']
+const loc = `${__dirname}`
 async function a(plId,listName) {
     const json = await getPlayList(plId);
-    const loc = `${__dirname}/../${REPONAME}`
     console.log(loc);
     
-    fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
+    fs.writeFile(`${loc}/data/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
         if(err) throw err;
         console.log("file was saved")
     });
