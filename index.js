@@ -1,10 +1,12 @@
 
 const fetch = require('node-fetch')
 const fs = require('fs')
-let mykey = 'AIzaSyDKixZEfALq20c_9ZGOO4kReI1gFw8wsaU';
+const git = require('simple-git')
+let mykey = process.env['YOUTUBEKEY'];
 const PL_POP = 'PLkfUwwo13dlVzxFwznkToC11duvhBtyUS';
 const PL_PYTHON = 'PLkfUwwo13dlV4qfiZdiI6Ak8HXfhFDwpB';
 async function _getPlayList(plId, pageToken) {
+    console.log(mykey);
     
   const YOUTUBE_API_KEY = mykey;
 
@@ -60,6 +62,24 @@ async function a(plId,listName) {
         console.log("file was saved")
     });
 }
-a(PL_POP,"pop")
-a(PL_PYTHON,"python")
-
+const USER = process.env['GITUSER'];
+const PASSWORD = process.env['GITPASSWORD'];
+const REPONAME = process.env['GITREPONAME'];
+const REPO = process.env['GITREPO']
+async function App() {    
+    const remote = `https://${USER}:${PASSWORD}@${REPO}`;
+    try {
+        await git().silent(true).clone(remote);        
+        a(PL_POP,"pop")
+        a(PL_PYTHON,"python")
+        const databaseGit = git(loc);
+        await databaseGit.add(`.`)
+        await databaseGit.commit('cron youTubeID')
+        await databaseGit.push('origin', 'master')
+        console.log("pushed")
+    } catch(err) {
+        console.error('failed: ', err)
+    }
+    
+}
+App()
