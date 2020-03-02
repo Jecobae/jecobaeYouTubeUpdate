@@ -55,6 +55,11 @@ async function getPlayList(plId, pageToken) {
       };
     }
   }
+  
+const USER = process.env['GITUSER'];
+const PASSWORD = process.env['GITPASSWORD'];
+const REPONAME = process.env['GITREPONAME'];
+const REPO = process.env['GITREPO']
 async function a(plId,listName) {
     const json = await getPlayList(plId);
     const loc = `${__dirname}/../${REPONAME}`
@@ -63,10 +68,6 @@ async function a(plId,listName) {
         console.log("file was saved")
     });
 }
-const USER = process.env['GITUSER'];
-const PASSWORD = process.env['GITPASSWORD'];
-const REPONAME = process.env['GITREPONAME'];
-const REPO = process.env['GITREPO']
 async function App() {    
     const remote = `https://${USER}:${PASSWORD}@${REPO}`;
     try {
