@@ -64,7 +64,6 @@ const loc = `${__dirname}`
 async function a(plId,listName) {
     const json = await getPlayList(plId);
     console.log(loc);
-    
     fs.writeFile(`${loc}/data/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
         if(err) throw err;
         console.log("file was saved")
