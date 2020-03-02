@@ -57,7 +57,8 @@ async function getPlayList(plId, pageToken) {
   }
 async function a(plId,listName) {
     const json = await getPlayList(plId);
-    fs.writeFile(`./data/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
+    const loc = `${__dirname}/../${REPONAME}`
+    fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
         if(err) throw err;
         console.log("file was saved")
     });
