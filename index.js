@@ -60,10 +60,8 @@ const USER = process.env['GITUSER'];
 const PASSWORD = process.env['GITPASSWORD'];
 const REPONAME = process.env['GITREPONAME'];
 const REPO = process.env['GITREPO']
-const loc = `${__dirname}`
-async function a(plId,listName) {
+async function a(plId,listName,loc) {
     const json = await getPlayList(plId);
-    console.log(loc);
     fs.writeFile(`${loc}/data/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
         if(err) throw err;
         console.log("file was saved")
@@ -72,9 +70,10 @@ async function a(plId,listName) {
 async function App() {    
     const remote = `https://${USER}:${PASSWORD}@${REPO}`;
     try {
-        await git().silent(true).clone(remote);        
-        a(PL_POP,"pop")
-        a(PL_PYTHON,"python")
+        await git().silent(true).clone(remote);     
+        const loc = `${__dirname}/../${REPONAME}`
+        a(PL_POP,"pop",loc)
+        a(PL_PYTHON,"python",loc)
         const databaseGit = git(loc);
         await databaseGit.add(`.`)
         await databaseGit.commit('cron youTubeID')
