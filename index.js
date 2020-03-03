@@ -63,7 +63,7 @@ const REPO = process.env['GITREPO']
 
 async function writeJson(plId,listName,loc) {
   const json = await getPlayList(plId);  
-  fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
+  await fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
       if(err) throw err;
       console.log("file was saved")
   });
