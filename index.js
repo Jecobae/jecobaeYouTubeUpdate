@@ -72,7 +72,7 @@ async function App() {
   const remote = `https://${USER}:${PASSWORD}@${REPO}`;
   try {
       await git().silent(true).clone(remote);
-      const loc = `${__dirname}\\${REPONAME}`
+      const loc = `${__dirname}/../${REPONAME}`
       await writeJson(PL_POP,"pop",loc)
       await writeJson(PL_PYTHON,"python",loc)
       console.log(loc);
