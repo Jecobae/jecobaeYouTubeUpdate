@@ -60,28 +60,31 @@ const USER = process.env['GITUSER'];
 const PASSWORD = process.env['GITPASSWORD'];
 const REPONAME = process.env['GITREPONAME'];
 const REPO = process.env['GITREPO']
-async function a(plId,listName,loc) {
-    const json = await getPlayList(plId);
-    fs.writeFile(`${loc}/data/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
-        if(err) throw err;
-        console.log("file was saved")
-    });
+
+async function writeJson(plId,listName,loc) {
+  const json = await getPlayList(plId);  
+  fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
+      if(err) throw err;
+      console.log("file was saved")
+  });
 }
 async function App() {    
-    const remote = `https://${USER}:${PASSWORD}@${REPO}`;
-    try {
-        await git().silent(true).clone(remote);     
-        const loc = `${__dirname}/../${REPONAME}`
-        a(PL_POP,"pop",loc)
-        a(PL_PYTHON,"python",loc)
-        const databaseGit = git(loc);
-        await databaseGit.add(`.`)
-        await databaseGit.commit('cron youTubeID')
-        await databaseGit.push('origin', 'master')
-        console.log("pushed")
-    } catch(err) {
-        console.error('failed: ', err)
-    }
-    
+  const remote = `https://${USER}:${PASSWORD}@${REPO}`;
+  try {
+      await git().silent(true).clone(remote);
+      const loc = `${__dirname}\\${REPONAME}`
+      await writeJson(PL_POP,"pop",loc)
+      await writeJson(PL_PYTHON,"python",loc)
+      console.log(loc);
+      
+      const databaseGit = git(loc);
+      await databaseGit.add(`.`)
+      await databaseGit.commit('cron youTubeID')
+      await databaseGit.push('origin','master')
+      console.log("pushed")
+  } catch(err) {
+      console.error('failed: ', err)
+  }
+  
 }
 App()
