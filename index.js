@@ -3,8 +3,7 @@ const fetch = require('node-fetch')
 const fs = require('fs')
 const git = require('simple-git/promise')
 let mykey = process.env['YOUTUBEKEY'];
-const PL_POP = 'PLkfUwwo13dlVzxFwznkToC11duvhBtyUS';
-const PL_PYTHON = 'PLkfUwwo13dlV4qfiZdiI6Ak8HXfhFDwpB';
+const PL_LIST = ['ETC','DATA_ANALYSIS','DJANGO','PYTHON','JS','CSS','HTML','POP']
 async function _getPlayList(plId, pageToken) {
     console.log(mykey);
     
@@ -61,8 +60,8 @@ const PASSWORD = process.env['GITPASSWORD'];
 const REPONAME = process.env['GITREPONAME'];
 const REPO = process.env['GITREPO']
 
-async function writeJson(plId,listName,loc) {
-  const json = await getPlayList(plId);  
+async function writeJson(listName,loc) {
+  const json = await getPlayList(process.env[listName]);  
   await fs.writeFile(`${loc}/${listName}.json`, JSON.stringify(json), 'utf8', (err) => {
       if(err) throw err;
       console.log("file was saved")
@@ -73,8 +72,9 @@ async function App() {
   try {
       await git().silent(true).clone(remote);
       const loc = `${__dirname}/${REPONAME}`
-      await writeJson(PL_POP,"pop",loc)
-      await writeJson(PL_PYTHON,"python",loc)
+      await PL_LIST.forEach(element => {
+        writeJson(element,loc)
+      });
       console.log(loc);
       
       const databaseGit = git(loc);
