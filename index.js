@@ -72,10 +72,9 @@ async function App() {
   try {
       await git().silent(true).clone(remote);
       const loc = `${__dirname}/${REPONAME}`
-      await PL_LIST.forEach(async element => {
+      for (const element of PL_LIST) {
         await writeJson(element,loc)
-      });
-      console.log(loc);
+      }
       
       const databaseGit = git(loc);
       await databaseGit.add(`.`)
