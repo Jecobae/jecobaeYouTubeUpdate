@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const fs = require('fs')
 const git = require('simple-git/promise')
 let mykey = process.env['YOUTUBEKEY'];
-const PL_LIST = ['ETC','DATA_ANALYSIS','DJANGO','PYTHON','JS','CSS','HTML','POP']
+const PL_LIST = ['ETC','DATA_ANALYSIS','DJANGO','PYTHON','JS','CSS','HTML','POP', 'JECOBAE_APP']
 async function _getPlayList(plId, pageToken) {
     console.log(mykey);
     
